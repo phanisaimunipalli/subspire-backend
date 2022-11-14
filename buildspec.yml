@@ -3,7 +3,8 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 12
+      nodejs: 16
+
     commands:
       # Install dependencies needed for running tests
       - npm install
@@ -13,11 +14,11 @@ phases:
   pre_build:
     commands:
       # Discover and run unit tests in the 'tests' directory
-      - npm test
+      - echo Nothing to do in the pre_build phase...
   post_build:
     commands:
       # Remove existing node_modules to clear dev dependencies
-      - rm -r node_modules
+      - rm -rf node_modules
 
       # Install runtime dependencies
       - npm install --production
@@ -29,5 +30,4 @@ phases:
       - sed -i.bak 's/\$PARTITION\$/'${PARTITION}'/g;s/\$AWS_REGION\$/'${AWS_REGION}'/g;s/\$ACCOUNT_ID\$/'${ACCOUNT_ID}'/g;s/\$PROJECT_ID\$/'${PROJECT_ID}'/g' template-configuration.json
 artifacts:
   files:
-    - template-export.yml
-    - template-configuration.json
+    - "**/*"
