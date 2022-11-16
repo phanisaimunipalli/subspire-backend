@@ -78,61 +78,25 @@ const findAllSubscriptionByZipCode = async (req, res) => {
   }
 };
 
-// Create New CRUD
-// const crud_create_post = (req, res) => {
-// 	let crud = new Crud(req.body);
-// 	crud
-// 		.save()
-// 		.then((crud) => {
-// 			res.send(crud);
-// 		})
-// 		.catch(function (err) {
-// 			res.status(422).send("Crud add failed");
-// 		});
-// };
-
-// // Show a particular CRUD Detail by Id
-// const crud_details = (req, res) => {
-// 	Crud.findById(req.params.id, function (err, crud) {
-// 		if (!crud) {
-// 			res.status(404).send("No result found");
-// 		} else {
-// 			res.json(crud);
-// 		}
-// 	});
-// };
-
-// // Update CRUD Detail by Id
-// const crud_update = (req, res) => {
-// 	Crud.findByIdAndUpdate(req.params.id, req.body)
-// 		.then(function () {
-// 			res.json("Crud updated");
-// 		})
-// 		.catch(function (err) {
-// 			res.status(422).send("Crud update failed.");
-// 		});
-// };
-
-// // Delete CRUD Detail by Id
-// const crud_delete = (req, res) => {
-// 	Crud.findById(req.params.id, function (err, crud) {
-// 		if (!crud) {
-// 			res.status(404).send("Crud not found");
-// 		} else {
-// 			Crud.findByIdAndRemove(req.params.id)
-// 				.then(function () {
-// 					res.status(200).json("Crud deleted");
-// 				})
-// 				.catch(function (err) {
-// 					res.status(400).send("Crud delete failed.");
-// 				});
-// 		}
-// 	});
-// };
+const findNetMoneySpentByZipCode = async (req, res) => {
+  console.log("req.params.zipcode: ", req.params.zipcode);
+  try {
+    res.status(200).json(
+      await UserModel.getTotalMoneySpentByZip(
+        // req.body,
+        req.params.zipcode
+      )
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
+};
 
 module.exports = {
   getAllSubscriptions,
   createSubscription,
   updateSubscription,
   findAllSubscriptionByZipCode,
+  findNetMoneySpentByZipCode,
 };
