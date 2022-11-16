@@ -8,7 +8,6 @@ const app = express()
 const PORT = process.env.PORT || 8080
 const router = express.Router()
 const path = require('path')
-const frontend_path = path.join(__dirname, './frontend')
 const config = require("./config/config");
 
 router.use((req, res, next) => {
@@ -33,14 +32,11 @@ app.use((req, res, next) => {
   next()
 })
 
-// register frontend static paths
-app.use(express.static(frontend_path))
-
 var cron = require('node-cron')
 
-// cron.schedule("* * * * *", async () => {
-//   emailNotifier();
-// });
+cron.schedule("0 */6 * * *", async () => {
+  emailNotifier();
+});
 
 async function emailNotifier() {
   const sql = `Select Subscriptions.end_date,Subspire.User.email,Subspire.Subscriptions.service from Subspire.Subscriptions INNER JOIN Subspire.User ON Subspire.User.uuid = Subspire.Subscriptions.user_uuid  where end_date < DATE_ADD(CURDATE(), INTERVAL 5 DAY) && end_date > CURDATE()`
@@ -81,10 +77,6 @@ app.use('/', router)
 app.use('/api', crudRoutes)
 app.use('/api/auth', authRoutes)
 
-// Catch all requests that don't match any route and forward to frontend
-app.get('*', (req, res) => {
-  res.sendFile(frontend_path)
-})
 
 // listening on port
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`))
