@@ -15,7 +15,7 @@ function Subscription(params) {
   this.notifyFlag = params.notify;
   this.price = params.price;
   this.currency = params.currency;
-  this.fileName = params.fileName
+  // this.fileName = params.fileName;
   return this;
 }
 
@@ -31,9 +31,9 @@ const getAllSubscriptions = async (userUUID) => {
   });
 };
 
-const createNewSubscription = async (subscription, userUUID, fileName) => {
+const createNewSubscription = async (subscription, userUUID) => {
   const uuid = uuidv4();
-  const sql = `INSERT INTO ${tableName} (sub_uuid, service,  user_uuid, plan_type, billing_cycle, start_Date, end_date, category, notify, price, currency, receipt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
+  const sql = `INSERT INTO ${tableName} (sub_uuid, service,  user_uuid, plan_type, billing_cycle, start_Date, end_date, category, notify, price, currency) VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
   const result = await query(sql, [
     uuid,
     subscription.service,
@@ -46,7 +46,6 @@ const createNewSubscription = async (subscription, userUUID, fileName) => {
     subscription.notifyFlag,
     subscription.price,
     subscription.currency,
-    fileName
   ]);
   const affectedRows = result ? result.affectedRows : 0;
   return {

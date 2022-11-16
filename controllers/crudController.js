@@ -15,7 +15,7 @@ const getAllSubscriptions = async (req, res) => {
 
 const createSubscription = async (req, res) => {
   try {
-    // console.log("create.sub.req: ", req);
+    console.log("create.sub.req: ", req);
     // const file = req.files.receipt;
     // let s3bucket = new AWS.S3({
     //   accessKeyId: config.properties.s3.accessKeyId,
@@ -77,10 +77,25 @@ const findAllSubscriptionByZipCode = async (req, res) => {
   }
 };
 
+const findNetMoneySpentByZipCode = async (req, res) => {
+  console.log("req.params.zipcode: ", req.params.zipcode);
+  try {
+    res.status(200).json(
+      await UserModel.getTotalMoneySpentByZip(
+        // req.body,
+        req.params.zipcode
+      )
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
+};
 
 module.exports = {
   getAllSubscriptions,
   createSubscription,
   updateSubscription,
   findAllSubscriptionByZipCode,
+  findNetMoneySpentByZipCode,
 };
