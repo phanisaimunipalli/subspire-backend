@@ -2,7 +2,6 @@ const SubscriptionModel = require("../models/Subscription");
 const UserModel = require("../models/user");
 const config = require("../config/config");
 
-// Display All CRUD Data
 const getAllSubscriptions = async (req, res) => {
   try {
     res
@@ -24,16 +23,16 @@ const createSubscription = async (req, res) => {
     //   region: config.properties.s3.region,
     // });
 
-    //Location of store for file upload
+    // //Location of store for file upload
 
-    var params = {
-      Bucket: config.properties.s3.bucketName,
-      Key: file.name + "-" + Date.now(),
-      Body: file.data,
-      ContentType: file.mimetype,
-      ACL: "public-read",
-    };
-    s3bucket.upload(params, function (err, data) {});
+    // var params = {
+    //   Bucket: config.properties.s3.bucketName,
+    //   Key: file.name + "-" + Date.now(),
+    //   Body: file.data,
+    //   ContentType: file.mimetype,
+    //   ACL: "public-read",
+    // };
+    // s3bucket.upload(params, function (err, data) {});
 
     res
       .status(200)
