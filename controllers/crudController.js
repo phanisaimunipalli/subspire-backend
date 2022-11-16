@@ -17,12 +17,12 @@ const getAllSubscriptions = async (req, res) => {
 const createSubscription = async (req, res) => {
   try {
     console.log("create.sub.req: ", req);
-    const file = req.files.receipt;
-    let s3bucket = new AWS.S3({
-      accessKeyId: config.properties.s3.accessKeyId,
-      secretAccessKey: config.properties.s3.secretAccessKey,
-      region: config.properties.s3.region,
-    });
+    // const file = req.files.receipt;
+    // let s3bucket = new AWS.S3({
+    //   accessKeyId: config.properties.s3.accessKeyId,
+    //   secretAccessKey: config.properties.s3.secretAccessKey,
+    //   region: config.properties.s3.region,
+    // });
 
     //Location of store for file upload
 
