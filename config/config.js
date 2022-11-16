@@ -1,25 +1,23 @@
 const properties = {
     mysql: {
-        host: 'subscriptions.cgdyvrf3zl4t.us-east-1.rds.amazonaws.com', // e.g. us-east-2_uXboG5pAb
-        port: '3306', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv
-        user: 'admin', // e.g. us-east-2
-        password: 'Piyush123.',
-        database: 'Subspire'
+        host: process.env.MYSQL_HOST,
+        port: process.env.MYSQL_PORT, 
+        user: process.env.MYSQL_USER, 
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE
 
-    },
-    s3: {
-        accessKeyId: '',
-        secretAccessKey: '',
-        region: ''
     },
     poolData: {
-        UserPoolId: 'us-east-1_ajdX9dHe7',
-        ClientId: '53h2pff32r6m0gj4hqtdjf5aqd',
-        poolRegion: 'us-east-1'
+        UserPoolId: process.env.COGNITO_USERPOOL_ID,
+        ClientId: process.env.COGNITO_CLIENT_ID,
+        poolRegion: process.env.COGNITO_POOL_REGION
     },
+    lambda: {
+        sendEmailLambdaName: process.env.LAMBDA_SEND_EMAIL_NAME,
+        accessKeyId: process.env.ACCESS_KEY_ID,
+        secretAccessKey: process.env.SECRET_ACCESS_KEY,
+        region: process.env.LAMBDA_REGION
 
-    api: {
-        ianvokeUrl: 'https://hn45jqsf22.execute-api.us-west-2.amazonaws.com/prod' // e.g. https://rc7nyt4tql.execute-api.us-west-2.amazonaws.com/prod',
     }
 };
 const jwkUrl = `https://cognito-idp.${properties.poolData.poolRegion}.amazonaws.com/${properties.poolData.UserPoolId}/.well-known/jwks.json`;

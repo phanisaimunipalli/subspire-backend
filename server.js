@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 8080
 const router = express.Router()
 const path = require('path')
 const frontend_path = path.join(__dirname, './frontend')
+const config = require("./config/config");
 
 router.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET')
@@ -18,9 +19,9 @@ router.use((req, res, next) => {
 var AWS = require('aws-sdk')
 // you shouldn't hardcode your keys in production! See http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html
 AWS.config.update({
-  region: 'us-west-1',
-  accessKeyId: 'AKIAQTYZXDJS47YM7ARP',
-  secretAccessKey: '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',
+  region: config.properties.lambda.region,
+  accessKeyId: config.properties.lambda.accessKeyId,
+  secretAccessKey: config.properties.lambda.secretAccessKey,
 })
 
 // middleware
