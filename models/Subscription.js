@@ -55,4 +55,27 @@ const createNewSubscription = async (subscription, userUUID) => {
   };
 };
 
-module.exports = { getAllSubscriptions, createNewSubscription };
+const updateSubscription = async (subscription, user_uuid, sub_uuid) => {
+  const sql = `UPDATE ${tableName} SET plan_type = ?, billing_cycle = ?, start_Date = ?, end_date = ?, notify= ?, category = ?, price = ?, currency = ? WHERE  user_uuid='${user_uuid}' AND sub_uuid='${sub_uuid}'`;
+  console.log("update query: ", sql);
+  const result = await query(sql, [
+    subscription.planType,
+    subscription.billingCycle,
+    subscription.startDate,
+    subscription.endDate,
+    subscription.notifyFlag,
+    subscription.category,
+    subscription.price,
+    subscription.currency,
+  ]);
+  console.log("update.result: ", result);
+  const affectedRows = result ? result.affectedRows : 0;
+  console.log("Number of Records updated in table", affectedRows);
+  return { description: "Subscription updated successfully!", status: 200 };
+};
+
+module.exports = {
+  getAllSubscriptions,
+  createNewSubscription,
+  updateSubscription,
+};
